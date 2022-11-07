@@ -15,7 +15,7 @@ This dApp allows the users to perform the following operations:
 1. Any user can create and define a template based on his needs with any number of variables within the tempalte. This template is then stored on the decentralized storage platform and is available for any public use. Note: The dApp only supports text for now, but the plan is to support image and other media in the near future. 
 2. Any user can select an existing template and fill in the required values to create a full fledged document, available on the decentrlized storage (NFT.Storage in this case)
 
-#### Aimed for bounty
+#### Aimed for bounty`
 https://gitcoin.co/issue/29523
 
 
