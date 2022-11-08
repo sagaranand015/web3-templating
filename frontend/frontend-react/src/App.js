@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Form from './Form';
 
-import { uploadData } from './storage';
+import { uploadData, getData } from './storage';
 
 function App() {
   const [currentAccount, setCurrentAccount] = useState(null);
@@ -33,8 +33,17 @@ function App() {
     const filename = currentAccount + "_doc";
     await uploadData(currentAccount, data, filename).then(function (resp) {
       console.log('upload done: ', resp);
+      getData([resp]).then(function (getResp) {
+        console.log("======= from IPFS: ", getResp);
+      });
+
     });
   };
+
+  // const showFiles = async () => {
+  //   const resp = getData(["bafybeiae2obpsbwqcwzunmjo3jt6iuwn7magtuyv5szqzd34ryx3qg4gum", "bafybeiebg76utmme6ldnft2llvpml5bpymczvisumjjjs6v2pmqbjnvcpi"]);
+  // }
+
 
   return (
     <div>
@@ -70,6 +79,7 @@ function App() {
         )}
 
         <Form onSubmit={onSubmit} />
+        {/* <button onClick={showFiles}>Show All Files (Demo)</button> */}
       </header>
     </div>
   );
