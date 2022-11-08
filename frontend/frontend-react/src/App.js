@@ -39,9 +39,9 @@ function App() {
         }
     };
 
-    const onSubmit = data => {
-      // Handle form data or submission here 
-      console.log('form data: ', data)
+    const onSubmit = (data) => {
+        // Handle form data or submission here
+        console.log('form data: ', data);
     };
 
     // const uploadTemplateHandler = async (event) => {
@@ -59,7 +59,6 @@ function App() {
     //     });
     //     console.log('======== resp01: ', resp);
     // };
-
 
     return (
         <div>

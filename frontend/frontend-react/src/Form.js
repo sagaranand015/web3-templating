@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
 
 const Form = ({ ...props }) => {
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit, watch } = useForm();
     const { onSubmit } = props;
+
+    const fields = watch();
 
     return (
         <>
@@ -84,6 +86,60 @@ const Form = ({ ...props }) => {
                                                 placeholder="mm/dd/yyyy"
                                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring-sky-500 sm:text-sm"
                                             />
+                                        </div>
+                                        <div className="col-span-6 my-4">
+                                            <div className="w-full border-b-2 border-gray-100" />
+                                        </div>
+                                        <div className="col-span-6">
+                                            <h3 className="text-xl font-bold leading-6 text-gray-700 mb-2">
+                                                Preview your document below
+                                            </h3>
+
+                                            <div className="bg-gray-100 p-4">
+                                                <span className="font-bold underline">
+                                                    {fields.platform || '{{ Platform Here }}'}
+                                                </span>
+                                                {' '}
+                                                Commodo esse esse exercitation laborum
+                                                amet adipisicing aute esse nulla qui in
+                                                minim. Officia ea non consequat pariatur
+                                                non. Lorem laborum fugiat adipisicing
+                                                ullamco.
+                                            </div>
+                                            <div className="bg-gray-100 p-4">
+                                                <span className="font-bold underline">
+                                                    {fields.businessName || '{{ Business Name Here }}'}
+                                                </span>
+                                                {' '}
+                                                Commodo esse esse exercitation laborum
+                                                amet adipisicing aute esse nulla qui in
+                                                minim. Officia ea non consequat pariatur
+                                                non. Lorem laborum fugiat adipisicing
+                                                ullamco.
+                                            </div>
+                                            <div className="bg-gray-100 p-4">
+                                                <span className="font-bold underline">
+                                                    {fields.businessAddress || '{{ Business Address Here }}'}
+                                                </span>
+                                                {' '}
+                                                Commodo esse esse exercitation laborum
+                                                amet adipisicing aute esse nulla qui in
+                                                minim. Officia ea non consequat pariatur
+                                                non. Lorem laborum fugiat adipisicing
+                                                ullamco.
+                                            </div>
+                                            <div className="bg-gray-100 p-4">
+                                                <span className="font-bold underline">
+                                                    {fields.policyEffectiveDate || '{{ Policy Effective Date Here }}'}
+                                                </span>
+                                                {' '}
+                                                Commodo esse esse exercitation laborum
+                                                amet adipisicing aute esse nulla qui in
+                                                minim. Officia ea non consequat pariatur
+                                                non. Lorem laborum fugiat adipisicing
+                                                ullamco.
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
