@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Form from './Form';
 import { uploadData, getData } from './storage';
+import { getTemplate } from './helpers';
 // - show all documents an address has uploaded to IPFS
 // - swap out placeholder lorem
 // - add document name field
@@ -12,6 +13,7 @@ function App() {
     const [submitted, setSubmitted] = useState(false);
     const [documents, setDocuments] = useState([]);
     const [showDocuments, setShowDocuments] = useState(false);
+    const [ipfsUrl, setIpfsUrl] = useState('');
 
     const connectWalletHandler = async () => {
         const { ethereum } = window;
@@ -34,13 +36,27 @@ function App() {
     };
 
     useEffect(() => {
+        const isWalletConnected = async () => {
+            if (window.ethereum) {
+                await window.ethereum
+                    .request({ method: 'eth_requestAccounts' })
+                    .then(function (accounts) {
+                        setCurrentAccount(accounts[0]);
+                    });
+            }
+        };
+        isWalletConnected();
+
+        // get documents from local storage
         const documents = [];
         const items = { ...localStorage };
+
         for (const key of Object.keys(items)) {
             if (key.startsWith('w3temp')) {
                 documents.push(items[key]);
             }
         }
+
         setDocuments(documents);
     }, []);
 
@@ -48,14 +64,24 @@ function App() {
         // Handle form data or submission here
         console.log('form data: ', data);
         try {
-            localStorage.setItem(`w3temp-${data.documentName}`, JSON.stringify(data));
-            await uploadData(currentAccount, data, data.documentName).then(function (resp) {
+            // upload to ipfs
+            await uploadData(
+                currentAccount,
+                { data: { variables: data, document: getTemplate(data) } }, // passing in variables and raw document text
+                data.documentName,
+            ).then(function (resp) {
                 console.log('upload done: ', resp);
                 getData([resp]).then(function (getResp) {
                     console.log('======= from IPFS: ', getResp);
+                    // set ipfs link on success screen
+                    setIpfsUrl(getResp);
+                    // set data on localstorage
+                    localStorage.setItem(
+                        `w3temp-${data.documentName}`,
+                        JSON.stringify({ ...data, getResp }),
+                    );
                 });
             });
-            // const filename = currentAccount + '_doc';
             setSubmitted(true);
         } catch (err) {
             console.log('submit err:', err);
@@ -139,17 +165,10 @@ function App() {
                                                     {parsedDoc.documentName}
                                                 </p>
                                                 <p>
-                                                    Business Address:{' '}
-                                                    {parsedDoc.businessAddress}
-                                                </p>
-                                                <p>
-                                                    Business Name:{' '}
-                                                    {parsedDoc.businessName}
-                                                </p>
-                                                <p>Platform: {parsedDoc.platform}</p>
-                                                <p>
-                                                    Policy Effective Date:{' '}
-                                                    {parsedDoc.policyEffectiveDate}
+                                                    IPFS URL:{' '}
+                                                    <a href={ipfsUrl}>
+                                                        {parsedDoc.ipfsUrl}
+                                                    </a>
                                                 </p>
                                             </div>
                                         );
@@ -178,8 +197,7 @@ function App() {
                                                         Generate Another
                                                     </button>
                                                     <a
-                                                        href="/URL_HERE"
-                                                        type="button"
+                                                        href={ipfsUrl}
                                                         className="items-center rounded-md border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
                                                     >
                                                         See document on IPFS
