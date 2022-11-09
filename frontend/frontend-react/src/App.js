@@ -74,11 +74,12 @@ function App() {
                 getData([resp]).then(function (getResp) {
                     console.log('======= from IPFS: ', getResp);
                     // set ipfs link on success screen
-                    setIpfsUrl(getResp);
+                    const fUrl = getResp[0].fileUrl;
+                    setIpfsUrl(fUrl);
                     // set data on localstorage
                     localStorage.setItem(
                         `w3temp-${data.documentName}`,
-                        JSON.stringify({ ...data, getResp }),
+                        JSON.stringify({ ...data, fUrl }),
                     );
                 });
             });
