@@ -79,7 +79,7 @@ function App() {
                     // set data on localstorage
                     localStorage.setItem(
                         `w3temp-${data.documentName}`,
-                        JSON.stringify({ ...data, fUrl }),
+                        JSON.stringify({ ...data, ipfsUrl: fUrl }),
                     );
                 });
             });
