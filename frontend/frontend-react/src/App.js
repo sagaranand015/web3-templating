@@ -49,22 +49,18 @@ function App() {
         console.log('form data: ', data);
         try {
             localStorage.setItem(`w3temp-${data.documentName}`, JSON.stringify(data));
-            await uploadData(currentAccount, data, filename).then(function (resp) {
+            await uploadData(currentAccount, data, data.documentName).then(function (resp) {
                 console.log('upload done: ', resp);
                 getData([resp]).then(function (getResp) {
                     console.log('======= from IPFS: ', getResp);
                 });
             });
-            const filename = currentAccount + '_doc';
+            // const filename = currentAccount + '_doc';
             setSubmitted(true);
         } catch (err) {
             console.log('submit err:', err);
         }
     };
-
-    // const showFiles = async () => {
-    //   const resp = getData(["bafybeiae2obpsbwqcwzunmjo3jt6iuwn7magtuyv5szqzd34ryx3qg4gum", "bafybeiebg76utmme6ldnft2llvpml5bpymczvisumjjjs6v2pmqbjnvcpi"]);
-    // }
 
     return (
         <div>
