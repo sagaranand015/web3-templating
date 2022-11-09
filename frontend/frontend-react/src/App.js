@@ -172,7 +172,7 @@ function App() {
                                                 <p>
                                                     IPFS URL:{' '}
                                                     <a
-                                                        href={ipfsUrl}
+                                                        href={parsedDoc.ipfsUrl}
                                                         target="_blank"
                                                         rel="noreferrer"
                                                     >
