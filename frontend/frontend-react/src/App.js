@@ -67,7 +67,7 @@ function App() {
             // upload to ipfs
             await uploadData(
                 currentAccount,
-                { data: { variables: data, document: getTemplate(data) } }, // passing in variables and raw document text
+                { data: { variables: data, document: getTemplate({ fields: data }) } }, // passing in variables and raw document text
                 data.documentName,
             ).then(function (resp) {
                 console.log('upload done: ', resp);
