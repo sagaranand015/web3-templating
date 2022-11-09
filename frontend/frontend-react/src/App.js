@@ -14,6 +14,7 @@ function App() {
     const [documents, setDocuments] = useState([]);
     const [showDocuments, setShowDocuments] = useState(false);
     const [ipfsUrl, setIpfsUrl] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const connectWalletHandler = async () => {
         const { ethereum } = window;
@@ -64,6 +65,7 @@ function App() {
         // Handle form data or submission here
         console.log('form data: ', data);
         try {
+            setLoading(true);
             // upload to ipfs
             await uploadData(
                 currentAccount,
@@ -81,11 +83,13 @@ function App() {
                         `w3temp-${data.documentName}`,
                         JSON.stringify({ ...data, ipfsUrl: fUrl }),
                     );
+                    setSubmitted(true);
+                    setLoading(false);
                 });
             });
-            setSubmitted(true);
         } catch (err) {
             console.log('submit err:', err);
+            setLoading(false);
         }
     };
 
@@ -210,7 +214,7 @@ function App() {
                                 </div>
                             </div>
                         ) : (
-                            <Form onSubmit={onSubmit} />
+                            <Form onSubmit={onSubmit} loading={loading} />
                         )}
                     </>
                 )}

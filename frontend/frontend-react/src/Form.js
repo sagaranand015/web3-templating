@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 
 const Form = ({ ...props }) => {
     const { register, handleSubmit, watch } = useForm();
-    const { onSubmit } = props;
+    const { onSubmit, loading } = props;
 
     const fields = watch();
 
@@ -105,9 +105,16 @@ const Form = ({ ...props }) => {
                                         <div className="col-span-6">
                                             <button
                                                 type="submit"
-                                                className="inline-flex justify-center rounded-md border border-transparent bg-sky-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+                                                className={
+                                                    loading
+                                                        ? 'inline-flex justify-center rounded-md border border-transparent bg-gray-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2'
+                                                        : 'inline-flex justify-center rounded-md border border-transparent bg-sky-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2'
+                                                }
+                                                disabled={loading}
                                             >
-                                                Generate document
+                                                {loading
+                                                    ? 'Loading...'
+                                                    : 'Generate document'}
                                             </button>
                                         </div>
                                         <div className="col-span-6 mb-4 mt-0">
@@ -312,7 +319,6 @@ const Form = ({ ...props }) => {
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
