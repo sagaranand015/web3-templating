@@ -1,70 +1,19 @@
-# Getting Started with Create React App
+## Web3 Templating with NFT Storage
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project aims to implement a completely decentralized Templating Engine for managing a business' templated documents for anyone's daily use. These templates can be vary from Legal Documents like Privacy Policies, T&C Documens to custom built templates for a specific business need. The templates and documents created by users are stored on IPFS, making the entire solution completely decentralized in nature. 
 
-## Available Scripts
+### Use case
+Various use cases for this service can be enumerated as:
+1. Privacy Policy, T&C, EULA, Disclaimer etc. generators, making sure all templates and data are stored on the decentralized platforms. 
+2. Sales Documentation and Reporting Templates Generator, keeping all templates and generated documents on the decentralized storage.
+3. Web API Documentation Templates Generator, to plugin only the endpoints of an API and have the entire documentation up on the decentralized storage. 
+4. Marketing Emails Templates Generator, for sending beautiful marketing emails with templates residing on decentralized storage platforms.
+and so on.. 
 
-In the project directory, you can run:
+### User Workflows
+This dApp allows the users to perform the following operations: 
+1. Any user can create and define a template based on his needs with any number of variables within the tempalte. This template is then stored on the decentralized storage platform and is available for any public use. Note: The dApp only supports text for now, but the plan is to support image and other media in the near future. 
+2. Any user can select an existing template and fill in the required values to create a full fledged document, available on the decentrlized storage (NFT.Storage in this case)
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### Aimed for bounty`
+https://gitcoin.co/issue/29523
