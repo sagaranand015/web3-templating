@@ -119,7 +119,7 @@ const Form = ({ ...props }) => {
                                             </h3>
 
                                             <div className="bg-gray-100 p-4">
-                                                <p className="mb-2">
+                                                <div className="mb-2">
                                                     <h4 className="text-lg font-semibold mb-1">
                                                         Privacy Policy Last updated:
                                                     </h4>
@@ -144,7 +144,7 @@ const Form = ({ ...props }) => {
                                                     regarding the collection, use and
                                                     disclosure of Personal Information
                                                     when you use our Service.
-                                                </p>
+                                                </div>
                                                 <p className="mb-2">
                                                     We will not use or share your
                                                     information with anyone except as
@@ -312,7 +312,7 @@ const Form = ({ ...props }) => {
                                 </div>
                             </div>
                         </form>
-                        
+
                     </div>
                 </div>
             </div>

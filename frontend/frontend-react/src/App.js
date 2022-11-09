@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Form from './Form';
-
 import { uploadData, getData } from './storage';
-
 // - show all documents an address has uploaded to IPFS
 // - swap out placeholder lorem
 // - add document name field
@@ -12,7 +10,9 @@ import { uploadData, getData } from './storage';
 function App() {
     const [currentAccount, setCurrentAccount] = useState(null);
     const [submitted, setSubmitted] = useState(false);
-    
+    const [documents, setDocuments] = useState([]);
+    const [showDocuments, setShowDocuments] = useState(false);
+
     const connectWalletHandler = async () => {
         const { ethereum } = window;
         if (!ethereum) {
@@ -33,17 +33,29 @@ function App() {
         }
     };
 
+    useEffect(() => {
+        const documents = [];
+        const items = { ...localStorage };
+        for (const key of Object.keys(items)) {
+            if (key.startsWith('w3temp')) {
+                documents.push(items[key]);
+            }
+        }
+        setDocuments(documents);
+    }, []);
+
     const onSubmit = async (data) => {
         // Handle form data or submission here
         console.log('form data: ', data);
-        const filename = currentAccount + '_doc';
         try {
+            localStorage.setItem(`w3temp-${data.documentName}`, JSON.stringify(data));
             await uploadData(currentAccount, data, filename).then(function (resp) {
                 console.log('upload done: ', resp);
                 getData([resp]).then(function (getResp) {
                     console.log('======= from IPFS: ', getResp);
                 });
             });
+            const filename = currentAccount + '_doc';
             setSubmitted(true);
         } catch (err) {
             console.log('submit err:', err);
@@ -56,7 +68,7 @@ function App() {
 
     return (
         <div>
-            <header className="bg-sky-100 min-h-screen">
+            <header className="bg-sky-100 min-h-screen pb-16">
                 {currentAccount ? (
                     // Probably logout onClick here?
                     <p className="absolute top-4 right-4 text-sm font-semibold text-sky-700 opacity-70">
@@ -86,7 +98,107 @@ function App() {
                     </button>
                 )}
 
-                <Form onSubmit={onSubmit} />
+                {documents.length > 0 && (
+                    <>
+                        {showDocuments ? (
+                            <button
+                                onClick={() => setShowDocuments(false)}
+                                className="absolute top-4 left-4 inline-flex items-center rounded-md border border-transparent bg-orange-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                            >
+                                Generate Documents
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => setShowDocuments(true)}
+                                className="absolute top-4 left-4 inline-flex items-center rounded-md border border-transparent bg-orange-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                            >
+                                See My Documents
+                            </button>
+                        )}
+                    </>
+                )}
+
+                {showDocuments ? (
+                    <div className="pt-20">
+                        <div className="md:grid md:grid-cols-4 md:gap-6 align-center">
+                            <div className="mt-5 md:col-start-2 md:col-end-4 md:mt-0 align-center">
+                                <div className="px-4 sm:px-0 my-4 text-center">
+                                    <h3 className="text-3xl font-bold leading-6 text-sky-700">
+                                        Your Documents
+                                    </h3>
+                                    <p className="mt-1 text-md text-sky-700 opacity-70">
+                                        See your generated documents below
+                                    </p>
+                                </div>
+                                <div className="overflow-hidden shadow sm:rounded-md">
+                                    {documents.map((doc) => {
+                                        const parsedDoc = JSON.parse(doc);
+                                        return (
+                                            <div
+                                                className="bg-white px-4 py-10 sm:p-6"
+                                                key={parsedDoc.name}
+                                            >
+                                                <p>
+                                                    Document Name:{' '}
+                                                    {parsedDoc.documentName}
+                                                </p>
+                                                <p>
+                                                    Business Address:{' '}
+                                                    {parsedDoc.businessAddress}
+                                                </p>
+                                                <p>
+                                                    Business Name:{' '}
+                                                    {parsedDoc.businessName}
+                                                </p>
+                                                <p>Platform: {parsedDoc.platform}</p>
+                                                <p>
+                                                    Policy Effective Date:{' '}
+                                                    {parsedDoc.policyEffectiveDate}
+                                                </p>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        {submitted ? (
+                            <div className="pt-20">
+                                <div className="md:grid md:grid-cols-4 md:gap-6 align-center">
+                                    <div className="mt-5 md:col-start-2 md:col-end-4 md:mt-0 align-center">
+                                        <div className="overflow-hidden shadow sm:rounded-md">
+                                            <div className="bg-white px-4 py-10 sm:p-6">
+                                                <h3 className="text-3xl font-bold text-center">
+                                                    Submitted to IPFS!
+                                                </h3>
+                                                <p className="flex items-center justify-center mt-4">
+                                                    <button
+                                                        type="button"
+                                                        className="mr-4 items-center rounded-md border border-sky-600 bg-white text-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-50 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+                                                        onClick={() => setSubmitted(true)}
+                                                    >
+                                                        Generate Another
+                                                    </button>
+                                                    <a
+                                                        href="/URL_HERE"
+                                                        type="button"
+                                                        className="items-center rounded-md border border-transparent bg-sky-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2"
+                                                    >
+                                                        See document on IPFS
+                                                    </a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <Form onSubmit={onSubmit} />
+                        )}
+                    </>
+                )}
                 {/* <button onClick={showFiles}>Show All Files (Demo)</button> */}
             </header>
         </div>
